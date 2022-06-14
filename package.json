@@ -5,6 +5,10 @@
   "repository": "https://github.com/leandrakelly/pds-trabalho.git",
   "author": "<leandra.lima.ext@dasa.com.br>",
   "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules src/server.ts",
+    "test": "jest"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
