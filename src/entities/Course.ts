@@ -15,7 +15,7 @@ export class Course {
     @Column()
     end_time: string
 
-    constructor(props: Omit<Course, 'id'>, id?: string) { //gerar ID
+    constructor(props: Omit<Course, 'id'>, id?: string) { //gerar ID  
         Object.assign(this, props);
 
         if (!this.id) {
