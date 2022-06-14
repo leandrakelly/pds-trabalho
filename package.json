@@ -1,0 +1,8 @@
+{
+  "name": "pds-trabalho",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/leandrakelly/pds-trabalho.git",
+  "author": "<leandra.lima.ext@dasa.com.br>",
+  "license": "MIT"
+}
