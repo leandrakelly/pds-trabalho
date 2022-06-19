@@ -9,7 +9,9 @@ const AppDataSource = new DataSource({
     username: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
-    entities: [__dirname + '/../entities/*.ts']
+    entities: [__dirname + '/../entities/*.ts'],
+    migrations: [__dirname + '/../migrations/*.ts'],
+        
 });
 
 AppDataSource.initialize()
