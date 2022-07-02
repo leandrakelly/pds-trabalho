@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { createTeacherController } from '../modules/createTeacher/CreateTeacherFactory';
 import { deleteTeacherController } from '../modules/deleteTeacher/DeleteTeacherFactory';
 import { editTeacherController } from '../modules/editTeacher/EditTeacherFactory';
+import { findTeacherByIdController } from '../modules/findTeacherById/FindTeacherByIdFactory';
 import { listTeachersController } from '../modules/listTeachers/ListTeachersFactory';
 
 const teachersRouter = Router();
@@ -13,6 +14,10 @@ teachersRouter.post('/', (request, response) => {
 
 teachersRouter.get('/', (request, response) => {
     return listTeachersController.handle(request, response);
+})
+
+teachersRouter.get('/:id', (request, response) => {
+    return findTeacherByIdController.handle(request, response);
 })
 
 teachersRouter.put('/:id', (request, response) => {
