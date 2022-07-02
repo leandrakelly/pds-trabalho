@@ -2,7 +2,7 @@ import { Any, Repository } from 'typeorm';
 
 import { AppDataSource } from '../../database';
 import { Classroom } from '../../entities/Classroom';
-import { ICreateClassroomDTO } from '../../modules/createClassroom/createClassroomDTO';
+import { ICreateClassroomDTO } from '../../modules/createClassroom/CreateClassroomDTO';
 import { IClassroomsRepository } from '../IClassroomsRepository';
 
 export class PostgresClassroomsRepository implements IClassroomsRepository {
@@ -26,6 +26,9 @@ export class PostgresClassroomsRepository implements IClassroomsRepository {
         return await this.classRoomRepository.find();
     }
 
+    async findById(id: string): Promise<Classroom> {
+        return await this.classRoomRepository.findOne({ where: {id}});   
+    }
     async findByIds(ids: string[]): Promise<Classroom[]> {
         return await this.classRoomRepository.findBy({ id: Any(ids) });
     }
