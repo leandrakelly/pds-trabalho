@@ -1,6 +1,6 @@
 import { PostgresTeachersRepository } from '../../repositories/implementations/PostgresTeachersRepository';
 import { CreateTeacherController } from './CreateTeacherController';
-import { CreateTeacherService } from './createTeacherService';
+import { CreateTeacherService } from './CreateTeacherService';
 
 const postgresTeachersRepository = new PostgresTeachersRepository();
 

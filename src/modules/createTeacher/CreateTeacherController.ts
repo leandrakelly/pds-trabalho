@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { ICreateTeacherDTO } from './CreateTeacherDTO';
-import { CreateTeacherService } from './createTeacherService';
+import { CreateTeacherService } from './CreateTeacherService';
 
 
 export class CreateTeacherController {
