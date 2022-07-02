@@ -1,5 +1,7 @@
+import { UserRole } from '../../entities/User';
+
 export interface ICreateUserDTO {
     email: string;
     password: string;
-    role: string;
+    role: UserRole;
 }
