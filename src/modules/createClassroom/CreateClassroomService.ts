@@ -1,5 +1,5 @@
 import { IClassroomsRepository } from '../../repositories/IClassroomsRepository';
-import { ICreateClassroomDTO } from './createClassroomDTO';
+import { ICreateClassroomDTO } from './CreateClassroomDTO';
 
 export class CreateClassroomService {
   constructor(private coursesRepository: IClassroomsRepository) {}
