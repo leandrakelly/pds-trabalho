@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import { createUserController } from '../modules/createUser/CreateUserFactory';
+import { deleteUserController } from '../modules/deleteUser/DeleteUserFactory';
 import { editUserController } from '../modules/editUser/EditUserFactory';
 import { listUsersController } from '../modules/listUsers/ListUsersFactory';
 
@@ -16,6 +17,10 @@ usersRouter.get('/', (request, response) => {
 
 usersRouter.put('/:id', (request, response) => {
     return editUserController.handle(request, response);
+})
+
+usersRouter.delete('/:id', (request, response) => {
+    return deleteUserController.handle(request, response);
 })
 
 export { usersRouter };
