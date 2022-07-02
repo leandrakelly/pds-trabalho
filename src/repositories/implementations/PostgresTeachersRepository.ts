@@ -26,6 +26,10 @@ export class PostgresTeachersRepository implements ITeachersRepository {
         return await this.teachersRepository.find();
     }
 
+    async findById(id: string): Promise<Teacher> {
+        return await this.teachersRepository.findOne({ where: { id } });
+    }
+
     async findByIds(ids: string[]): Promise<Teacher[]> {
         return await this.teachersRepository.findBy({ id: Any(ids) });
     }
