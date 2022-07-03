@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Any, Repository } from 'typeorm';
 
 import { AppDataSource } from '../../database';
 import { Course, CourseStatus } from '../../entities/Course';
@@ -49,6 +49,10 @@ export class PostgresCoursesRepository implements ICoursesRepository {
                 classrooms: true
             }
         });
+    }
+
+    async findByIds(ids: string[]): Promise<Course[]> {
+        return await this.coursesRepository.findBy({ id: Any(ids) });
     }
 
     async update(course: Course): Promise<void> {
