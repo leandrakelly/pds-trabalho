@@ -4,6 +4,7 @@ import { AppDataSource } from '../../database';
 import { Classroom } from '../../entities/Classroom';
 import { ICreateClassroomDTO } from '../../modules/createClassroom/CreateClassroomDTO';
 import { IClassroomsRepository } from '../IClassroomsRepository';
+import { PostgresCoursesRepository } from './PostgresCoursesRepository';
 
 export class PostgresClassroomsRepository implements IClassroomsRepository {
     classRoomRepository: Repository<Classroom>;
@@ -13,22 +14,34 @@ export class PostgresClassroomsRepository implements IClassroomsRepository {
     }
 
     async save(data: ICreateClassroomDTO): Promise<Classroom>{
-        const { number } = data;
+        const { number, courses_ids } = data;
+        const courses = await new PostgresCoursesRepository().findByIds(courses_ids);
 
         const classroom = new Classroom({
             number,
+            courses
         });
 
         return await this.classRoomRepository.save(classroom);
     }
 
     async list(): Promise<Classroom[]> {
-        return await this.classRoomRepository.find();
+        return await this.classRoomRepository.find({
+            relations: {
+                courses: true
+            }
+        });
     }
 
     async findById(id: string): Promise<Classroom> {
-        return await this.classRoomRepository.findOne({ where: {id}});   
+        return await this.classRoomRepository.findOne({
+            where: { id },
+            relations: {
+                courses: true
+            }
+        });
     }
+
     async findByIds(ids: string[]): Promise<Classroom[]> {
         return await this.classRoomRepository.findBy({ id: Any(ids) });
     }
