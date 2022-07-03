@@ -4,4 +4,5 @@ export interface ICreateUserDTO {
     email: string;
     password: string;
     role: UserRole;
+    courses_ids: string[];
 }

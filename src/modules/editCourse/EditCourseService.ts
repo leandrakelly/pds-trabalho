@@ -2,6 +2,7 @@ import { Course } from '../../entities/Course';
 import { ICoursesRepository } from '../../repositories/ICoursesRepository';
 import { findClassroomsByIdsService } from '../findClassroomsByIds/FindClassroomsByIdsFactory';
 import { findTeachersByIdsService } from '../findTeachersByIds/FindTeachersByIdsFactory';
+import { findUsersByIdsService } from '../findUsersByIds/FindUsersByIdsFactory';
 import { IEditCourseDTO } from './EditCourseDTO';
 
 export class EditCourseService {
@@ -14,20 +15,27 @@ export class EditCourseService {
             throw new Error('Course does not exist!');
         }
 
-        const teachers = await findTeachersByIdsService.execute(data.teacher_ids);
+        if (data.teacher_ids) {
+            const teachers = await findTeachersByIdsService.execute(data.teacher_ids);
+            course.teachers = teachers;
+        }
 
-        const classrooms = await findClassroomsByIdsService.execute(data.classroom_ids);
+        if (data.classroom_ids) {
+            const classrooms = await findClassroomsByIdsService.execute(data.classroom_ids);
+            course.classrooms = classrooms;
+        }
+
+        if (data.users_ids) {
+            const users = await findUsersByIdsService.execute(data.users_ids);
+            course.users = users;
+        }
 
         course.name = data.name;
         course.start_time = data.start_time;
         course.end_time = data.end_time;
-        course.teachers = teachers;
-        course.classrooms = classrooms;
         course.status = data.status;
 
 
-        await this.coursesRepository.update(course);
-
-        return course;
+        return await this.coursesRepository.update(course);
     }
 }

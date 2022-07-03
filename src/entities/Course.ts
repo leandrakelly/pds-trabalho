@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 
 import { Classroom } from './Classroom';
 import { Teacher } from './Teacher';
+import { User } from './User';
 
 export enum CourseStatus {
     NEW = "new",
@@ -65,6 +66,23 @@ export class Course {
         }
     })
     classrooms: Classroom[]
+
+    @ManyToMany(() => User, {
+        cascade: true,
+        onDelete: 'CASCADE'
+    })
+    @JoinTable({
+        name: 'courses_users',
+        joinColumn: {
+            name: "course_id",
+            referencedColumnName: "id"
+        },
+        inverseJoinColumn: {
+            name: "user_id",
+            referencedColumnName: "id"
+        }
+    })
+    users: User[]
 
     constructor(props: Omit<Course, 'id'>, id?: string) {
         Object.assign(this, props);

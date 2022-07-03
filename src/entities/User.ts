@@ -1,5 +1,7 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+
+import { Course } from './Course';
 
 export enum UserRole {
     STUDENT = "student",
@@ -16,6 +18,23 @@ export class User {
 
     @Column()
     password: string;
+
+    @ManyToMany(() => Course, {
+        cascade: true,
+        onDelete: 'CASCADE'
+    })
+    @JoinTable({
+        name: 'courses_users',
+        joinColumn: {
+            name: "user_id",
+            referencedColumnName: "id"
+        },
+        inverseJoinColumn: {
+            name: "course_id",
+            referencedColumnName: "id"
+        }
+    })
+    courses: Course[]
 
     @Column({
         type: "enum",

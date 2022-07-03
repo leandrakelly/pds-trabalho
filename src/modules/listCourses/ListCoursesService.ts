@@ -1,12 +1,12 @@
-import { ICoursesRepository } from "../../repositories/ICoursesRepository";
-import { Course } from "../../entities/Course";
+import { Course } from '../../entities/Course';
+import { ICoursesRepository } from '../../repositories/ICoursesRepository';
 
 export class ListCoursesService {
     constructor(private coursesRepository: ICoursesRepository) {}
 
     async execute (): Promise<Course[]>{
-        const coursers = await this.coursesRepository.list();
+        const courses = await this.coursesRepository.list();
 
-        return coursers;
+        return courses;
     }
 }
