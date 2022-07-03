@@ -1,9 +1,11 @@
-import { Repository } from "typeorm";
-import { AppDataSource } from "../../database";
-import { Course } from "../../entities/Course";
-import { ICoursesRepository } from "../ICoursesRepository";
-import { ICreateCourseDTO } from "../../modules/createCourse/CreateCourseDTO";
+import { Repository } from 'typeorm';
 
+import { AppDataSource } from '../../database';
+import { Course, CourseStatus } from '../../entities/Course';
+import { ICreateCourseDTO } from '../../modules/createCourse/CreateCourseDTO';
+import { ICoursesRepository } from '../ICoursesRepository';
+import { PostgresClassroomsRepository } from './PostgresClassroomsRepository';
+import { PostgresTeachersRepository } from './PostgresTeachersRepository';
 
 export class PostgresCoursesRepository implements ICoursesRepository {
     coursesRepository: Repository<Course>;
@@ -13,24 +15,39 @@ export class PostgresCoursesRepository implements ICoursesRepository {
     }
 
     async save(data: ICreateCourseDTO): Promise<Course>{
-        const { name, start_time, end_time } = data;
+        const { name, start_time, end_time, teacher_ids, classroom_ids } = data;
+        const status = data.status ?? CourseStatus.NEW;
+        const teachers = await new PostgresTeachersRepository().findByIds(teacher_ids);
+        const classrooms = await new PostgresClassroomsRepository().findByIds(classroom_ids);
 
         const course = new Course({
             name,
             start_time,
             end_time,
+            teachers,
+            classrooms,
+            status
         });
 
         return await this.coursesRepository.save(course);
     }
 
     async list(): Promise<Course[]> {
-        return await this.coursesRepository.find();
+        return await this.coursesRepository.find({
+            relations: {
+                teachers: true,
+                classrooms: true
+            }
+        });
     }
 
     async findById(id: string): Promise<Course> {
         return await this.coursesRepository.findOne({
-            where: { id }
+            where: { id },
+            relations: {
+                teachers: true,
+                classrooms: true
+            }
         });
     }
 
