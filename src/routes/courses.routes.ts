@@ -19,7 +19,7 @@ coursesRouter.get('/', (request, response) => {
     return listCoursesController.handle(request, response);
 })
 
-coursesRouter.get('/:status', (request, response) => {
+coursesRouter.get('/status/:status', (request, response) => {
     return listCoursesByStatusController.handle(request, response);
 })
 

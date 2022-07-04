@@ -1,0 +1,899 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Gerenciamento de cursos",
+        "description": "API feita para a disciplina de PDS com objetivo de manipular cursos",
+        "contact": {
+            "email": "leandrakell@gmail.com"
+        },
+        "version": "v1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3333",
+            "description": "Server Principal"
+        }
+    ],
+    "paths": {
+        "/courses": {
+            "post": {
+                "sumary": "Criação de Curso",
+                "description": "Essa rota será responsável por criar um novo curso",
+                "tags": ["Courses"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Course"
+                            },
+                            "examples": {
+                                "Curso de Programação": {
+                                    "value": {
+                                        "name": "Curso de Programação",
+                                        "start_time": "07:00",
+                                        "end_time": "10:00",
+                                        "teacher_ids": ["0343ce92-7869-49aa-8154-abe9bea86683"],
+                                        "classroom_ids": ["7a172c5d-18ed-405b-90f1-b7fead186e04"],
+                                        "users_ids": ["77f073cd-68df-4a20-8ce6-2658a88831d3", "0561482f-4e6c-413f-bd0f-9400c0d1609d"],
+                                        "status": "new"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "sumary": "Listagem de Cursos",
+                "description": "Essa rota será responsável por listar todos os cursos",
+                "tags": ["Courses"],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/courses/status/{status}": {
+            "get": {
+                "sumary": "Listagem de Cursos por status",
+                "description": "Essa rota será responsável por listar todos os cursos com um status específico",
+                "tags": ["Courses"],
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "path",
+                        "description": "Status do curso para busca",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/courses/{id}": {
+            "get": {
+                "sumary": "Busca de Curso por ID",
+                "description": "Essa rota será responsável por buscar um curso com um ID específico",
+                "tags": ["Courses"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do curso para busca",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "sumary": "Editar um curso por ID",
+                "description": "Essa rota será responsável por editar um curso com um ID específico",
+                "tags": ["Courses"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do curso para edição",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Course"
+                            },
+                            "examples": {
+                                "Curso de Programação": {
+                                    "value": {
+                                        "name": "Curso de Programação 1",
+                                        "start_time": "07:00",
+                                        "end_time": "10:00",
+                                        "teacher_ids": ["0343ce92-7869-49aa-8154-abe9bea86683"],
+                                        "classroom_ids": ["7a172c5d-18ed-405b-90f1-b7fead186e04"],
+                                        "users_ids": ["77f073cd-68df-4a20-8ce6-2658a88831d3", "0561482f-4e6c-413f-bd0f-9400c0d1609d"],
+                                        "status": "on_going"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "sumary": "Deletar um Curso por ID",
+                "description": "Essa rota será responsável por deletar um curso específico",
+                "tags": ["Courses"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do curso para deleção",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/courses/{id}/status": {
+            "patch": {
+                "sumary": "Edição de Status de um curso",
+                "description": "Essa rota será responsável por editar o status de um curso específico",
+                "tags": ["Courses"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "Course": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "CourseStatus"
+                                        }
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Status": {
+                                    "value": {
+                                        "status": "completed"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do curso para a edição",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/courses/add_users": {
+            "patch": {
+                "sumary": "Adição de um aluno em um curso",
+                "description": "Essa rota será responsável por adicionar um ou mais alunos em um curso",
+                "tags": ["Courses"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "Course students": {
+                                    "type": "object",
+                                    "properties": {
+                                        "course_id": {
+                                            "type": "string"
+                                        },
+                                        "user_ids": {
+                                            "type": "string[]"
+                                        }
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Course students": {
+                                    "value": {
+                                        "course_id": "45918910-6ff0-4395-8ba4-a8bcafd58c47",
+                                        "user_ids": ["0561482f-4e6c-413f-bd0f-9400c0d1609d"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/classrooms": {
+            "post": {
+                "sumary": "Criação de Sala de aula",
+                "description": "Essa rota será responsável por criar uma nova sala",
+                "tags": ["Classrooms"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Classroom"
+                            },
+                            "examples": {
+                                "Sala": {
+                                    "value": {
+                                        "number": "12"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Classroom"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "sumary": "Listagem de Salas",
+                "description": "Essa rota será responsável por listar todas as salas",
+                "tags": ["Classrooms"],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Classroom"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/classrooms/{id}": {
+            "get": {
+                "sumary": "Busca de Sala por ID",
+                "description": "Essa rota será responsável por buscar uma sala com um ID específico",
+                "tags": ["Classrooms"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da sala para busca",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Classroom"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "sumary": "Editar uma sala por ID",
+                "description": "Essa rota será responsável por editar uma sala com um ID específico",
+                "tags": ["Classrooms"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da sala para edição",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Classrooms"
+                            },
+                            "examples": {
+                                "Sala": {
+                                    "value": {
+                                        "number": "20"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Classroom"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "sumary": "Deletar uma sala por ID",
+                "description": "Essa rota será responsável por deletar uma sala específica",
+                "tags": ["Classrooms"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da sala para deleção",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Classroom"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/teachers": {
+            "post": {
+                "sumary": "Criação de Professor",
+                "description": "Essa rota será responsável por criar um novo professor",
+                "tags": ["Teachers"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Teacher"
+                            },
+                            "examples": {
+                                "Sala": {
+                                    "value": {
+                                        "name": "Ana Silva"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Classroom"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "sumary": "Listagem de Professores",
+                "description": "Essa rota será responsável por listar todos os professores",
+                "tags": ["Teachers"],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Teacher"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/teachers/{id}": {
+            "get": {
+                "sumary": "Busca de Professor por ID",
+                "description": "Essa rota será responsável por buscar um professor com um ID específico",
+                "tags": ["Teachers"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do professor para busca",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Teacher"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "sumary": "Editar um professor por ID",
+                "description": "Essa rota será responsável por editar um professor com um ID específico",
+                "tags": ["Teachers"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do professor para edição",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Teacher"
+                            },
+                            "examples": {
+                                "Sala": {
+                                    "value": {
+                                        "name": "Ana Vitória"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Classroom"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "sumary": "Deletar um professor por ID",
+                "description": "Essa rota será responsável por deletar um professor específico",
+                "tags": ["Teachers"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do professor para deleção",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Teacher"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "sumary": "Criação de Usuário",
+                "description": "Essa rota será responsável por criar um novo usuãrio",
+                "tags": ["Users"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "Usuário": {
+                                    "value": {
+                                        "email": "AnaSilva@gmail.com",
+                                        "password": "Ana123",
+                                        "role": "student"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Classroom"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "sumary": "Listagem de Usuários",
+                "description": "Essa rota será responsável por listar todos os usuários",
+                "tags": ["Users"],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "sumary": "Busca de Usuário por ID",
+                "description": "Essa rota será responsável por buscar um usuário com um ID específico",
+                "tags": ["Users"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário para busca",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "sumary": "Editar um usuário por ID",
+                "description": "Essa rota será responsável por editar um usuário com um ID específico",
+                "tags": ["Users"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário para edição",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "Sala": {
+                                    "value": {
+                                        "email": "AnaVitoria2020@gmail.com",
+                                        "password": "Ana123",
+                                        "role": "admin"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Classroom"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "sumary": "Deletar um usuário por ID",
+                "description": "Essa rota será responsável por deletar um usuário específico",
+                "tags": ["Users"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário para deleção",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Unexpected error"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Course": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "start_time": {
+                        "type": "string"
+                    },
+                    "end_time": {
+                        "type": "string"
+                    },
+                    "teacher_ids": {
+                        "type": "string[]"
+                    },
+                    "classroom_ids": {
+                        "type": "string[]"
+                    },
+                    "users_ids": {
+                        "type": "string[]"
+                    },
+                    "status": {
+                        "type": "CourseStatus"
+                    }
+                }
+            },
+            "Classroom": {
+                "type": "object",
+                "properties": {
+                    "number": {
+                        "type": "string"
+                    },
+                    "courses_ids": {
+                        "type": "string[]"
+                    }
+                }
+            },
+            "Teacher": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "courses_ids": {
+                        "type": "string[]"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "UserRole"
+                    },
+                    "courses_ids": {
+                        "type": "string[]"
+                    }
+                }
+            }
+        }
+    }
+}
