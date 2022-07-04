@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { addUsersOnCourseController } from '../modules/addUsersOnCourse/AddUsersOnCourseFactory';
 import { createCourseController } from '../modules/createCourse/CreateCourseFactory';
 import { deleteCourseController } from '../modules/deleteCourse/DeleteCourseFactory';
 import { editCourseController } from '../modules/editCourse/EditCourseFactory';
@@ -32,6 +33,10 @@ coursesRouter.put('/:id', (request, response) => {
 
 coursesRouter.patch('/:id/status', (request, response) => {
     return editStatusController.handle(request, response);
+})
+
+coursesRouter.patch('/add_users', (request, response)=> {
+    return addUsersOnCourseController.handle(request, response);
 })
 
 coursesRouter.delete('/:id', (request, response) => {
