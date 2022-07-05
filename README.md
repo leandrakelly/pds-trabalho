@@ -16,20 +16,20 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 Para instalar o projeto, você deve ter o Postgres e um software administrador (o próprio pgAdmin ou software de terceiros como Beekeper e ter um database criado previamente. Para criar um banco, utilize o SQL Shell do Postgres e digite
 ```
-<create database "nome-aqui";>
+create database "nome-aqui";
 ```
 Com o banco criado, clone esse repositório e instale as dependencias usando yarn. Simplesmente digite:
 ```
-<yarn>
+yarn
 ```
 ou
 ```
-<yarn install>
+yarn install
 ```
 Após instalar as dependências, renomeie o arquivo  `.env.example` para apenas `.env` e coloque as credenciais do seu banco local.
 Logo após você pode rodar o projeto digitando:
 ```
-<yarn dev>
+yarn dev
 ```
 
 ## 📃 Acessando a documentação 
