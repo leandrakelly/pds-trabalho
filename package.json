@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/leandrakelly/pds-trabalho.git",
-  "author": "<leandra.lima.ext@dasa.com.br>",
+  "author": "<leandrakell@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules src/server.ts",
